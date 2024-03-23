@@ -4,12 +4,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineHome, AiOutlineLogin, AiOutlineUserAdd } from "react-icons/ai";
 import { MdOutlineLocalMovies } from "react-icons/md";
 import { logout } from '../../redux/features/auth/authSlice';
+import { useLogoutMutation } from '../../redux/api/users';
+
 
 const Navigation = () => {
     const { userInfo } = useSelector((state) => state.auth);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [logoutApiCall] = useLogoutMutation();
+    const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
@@ -54,9 +66,9 @@ const Navigation = () => {
                                     <Link to="/admin/movies/dashboard" className="block px-4 py-2 hover:bg-gray-100">Dashboard</Link>
                                 </li>
                             )}
-                            <li>
+                            {/* <li>
                                 <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">Profile</Link>
-                            </li>
+                            </li> */}
                             <li>
                                 <button onClick={logoutHandler} className="block w-full px-4 py-2 text-left hover:bg-gray-100">Logout</button>
                             </li>
