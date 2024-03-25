@@ -35,6 +35,19 @@ const createGenre = asyncHandler(async (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
+  const removeGenre = asyncHandler(async (req, res) => {
+    try {
+      const { id } = req.params;
+      const removed = await Genre.findByIdAndDelete(id);
+       if (!removed) {
+        return res.status(404).json({ error: "Genre not found" });
+      }
+      res.json(removed);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Interval server error" });
+    }
+  });
   
   
-  export{createGenre,updateGenre};
+  export{createGenre,updateGenre,removeGenre};
