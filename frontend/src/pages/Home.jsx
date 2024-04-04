@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+import Header from './Movies/Header.jsx';
 
 const Home = () => {
-  return (
-    <div>Home</div>
-  )
+  return (<>
+  <Header/>
+  </>)
 }
 
 export default Home
